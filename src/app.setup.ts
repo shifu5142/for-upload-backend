@@ -8,8 +8,13 @@ export function configureApplication(app: INestApplication): void {
   const config = app.get(ConfigService<Environment, true>);
 
   app.setGlobalPrefix("api/v1");
+  const webOrigin = config.get("WEB_ORIGIN", { infer: true });
   app.enableCors({
-    origin: config.get("WEB_ORIGIN", { infer: true }),
+    origin: [
+      webOrigin,
+      "https://for-upload-frontend.vercel.app",
+      /^https:\/\/for-upload-frontend(?:-[a-z0-9-]+)?\.vercel\.app$/,
+    ],
     credentials: true,
   });
   app.useGlobalPipes(
