@@ -6,14 +6,14 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { and, asc, desc, eq, inArray, or } from "drizzle-orm";
-import { getDatabase } from "src/db/database";
-import { categories } from "src/db/categories/schema";
-import { playbooks } from "src/db/playbook/schema";
+import { getDatabase } from "../db/database";
+import { categories } from "../db/categories/schema";
+import { playbooks } from "../db/playbook/schema";
 import type { UpdateSubCategoryDto } from "./dto/updateSubCategory.dto";
 import { ToggleCategoryDto } from "./dto/togglecategory.dto";
 import { CreateSubCategoryDto } from "./dto/CreateSubCategory.dto";
-import { AuthService } from "src/auth/auth.service";
-import { isAdminUser } from "src/auth/is-admin";
+import { AuthService } from "../auth/auth.service";
+import { isAdminUser } from "../auth/is-admin";
 import { UserDto } from "./dto/user.dto";
 import { ToggleSubCategoryDto } from "./dto/toggleSubCategory.dto";
 import { ReorderSubcategoriesDto } from "./dto/reorder-subcategories.dto";

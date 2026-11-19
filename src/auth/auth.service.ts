@@ -7,9 +7,9 @@ import {
 } from "@nestjs/common";
 import { eq, inArray } from "drizzle-orm";
 import { jwtDecode } from "jwt-decode";
-import { getDatabase } from "src/db/database";
-import { users } from "src/db/users/schema";
-import { workspaces } from "src/db/workspace/schema";
+import { getDatabase } from "../db/database";
+import { users } from "../db/users/schema";
+import { workspaces } from "../db/workspace/schema";
 
 type UserRole = "admin" | "sales_rep";
 

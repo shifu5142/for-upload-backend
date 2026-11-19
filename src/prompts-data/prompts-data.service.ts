@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { and, eq, isNull } from "drizzle-orm";
-import { getDatabase } from "src/db/database";
-import { categories } from "src/db/categories/schema";
-import { playbooks } from "src/db/playbook/schema";
-import { workspaces } from "src/db/workspace/schema";
+import { getDatabase } from "../db/database";
+import { categories } from "../db/categories/schema";
+import { playbooks } from "../db/playbook/schema";
+import { workspaces } from "../db/workspace/schema";
 import prompts from "../lib/prompts.json";
 import type {
   CategoryPublishDto,
