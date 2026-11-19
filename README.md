@@ -42,4 +42,3 @@ bun run check        # all checks and production build
 | `PORT` | `5000` | HTTP port |
 | `WEB_ORIGIN` | `http://localhost:3000` | Allowed frontend origin |
 | `SWAGGER_ENABLED` | `true` | Expose Swagger UI and OpenAPI JSON |
-"# for-upload-backend" 

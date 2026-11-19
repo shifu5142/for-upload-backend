@@ -14,6 +14,7 @@ import { ToggleCategoryDto } from "./dto/togglecategory.dto";
 import { CreateSubCategoryDto } from "./dto/CreateSubCategory.dto";
 import { ToggleSubCategoryDto } from "./dto/toggleSubCategory.dto";
 import { ReorderSubcategoriesDto } from "./dto/reorder-subcategories.dto";
+import { RenameCategoryDto } from "./dto/rename.dto";
 @Controller("category")
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
@@ -76,5 +77,16 @@ export class CategoryController {
       order: body.order,
       category: body.category,
     });
+  }
+  @Post("rename")
+  async renameCategory(
+    @Headers("authorization") authorization: string,
+    @Body() body: RenameCategoryDto,
+  ) {
+    return this.categoryService.renameCategory(
+      authorization,
+      body.categoryId,
+      body.name,
+    );
   }
 }

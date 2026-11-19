@@ -101,7 +101,9 @@ export class CategoryService {
       ? categoryRows
       : categoryRows.filter((category) => category.active);
 
-    const toCategoryObject = (category: (typeof visibleCategories)[number]) => ({
+    const toCategoryObject = (
+      category: (typeof visibleCategories)[number],
+    ) => ({
       id: category.id,
       workspace_id: category.workspaceId,
       parent_category_id: category.parentCategoryId,
@@ -113,9 +115,7 @@ export class CategoryService {
       updated_at: category.updatedAt,
     });
 
-    const toPlaybookObject = (
-      playbook: (typeof playbookRows)[number],
-    ) => ({
+    const toPlaybookObject = (playbook: (typeof playbookRows)[number]) => ({
       id: playbook.id,
       position: playbook.position ?? 0,
       workspace_id: playbook.workspaceId,
@@ -695,5 +695,21 @@ export class CategoryService {
       order: body.order,
       playbooks: updated,
     };
+  }
+  async renameCategory(
+    authorization: string,
+    categoryId: string,
+    name: string,
+  ) {
+    const database = getDatabase();
+    const [updated] = await database
+      .update(categories)
+      .set({
+        name,
+        updatedAt: new Date(),
+      })
+      .where(eq(categories.id, categoryId))
+      .returning();
+    return updated;
   }
 }

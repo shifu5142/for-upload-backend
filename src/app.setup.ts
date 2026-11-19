@@ -4,17 +4,36 @@ import { ConfigService } from "@nestjs/config";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import type { Environment } from "./config/environment";
 
+function isAllowedWebOrigin(origin: string | undefined, webOrigin: string) {
+  if (!origin || origin === webOrigin) return true;
+  try {
+    const url = new URL(origin);
+    return (
+      url.protocol === "https:" &&
+      url.hostname.startsWith("for-upload-frontend") &&
+      url.hostname.endsWith(".vercel.app")
+    );
+  } catch {
+    return false;
+  }
+}
+
 export function configureApplication(app: INestApplication): void {
   const config = app.get(ConfigService<Environment, true>);
 
   app.setGlobalPrefix("api/v1");
   const webOrigin = config.get("WEB_ORIGIN", { infer: true });
   app.enableCors({
-    origin: [
-      webOrigin,
-      "https://for-upload-frontend.vercel.app",
-      /^https:\/\/for-upload-frontend(?:-[a-z0-9-]+)?\.vercel\.app$/,
-    ],
+    origin: (
+      origin: string | undefined,
+      callback: (err: Error | null, allow?: boolean | string) => void,
+    ) => {
+      if (isAllowedWebOrigin(origin, webOrigin)) {
+        callback(null, origin ?? webOrigin);
+        return;
+      }
+      callback(null, false);
+    },
     credentials: true,
   });
   app.useGlobalPipes(
